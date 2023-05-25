@@ -58,6 +58,21 @@
           page_box.appendChild(page_span)
         }
 
+
+        //union of inputs and texareas to trigger autosave oninput
+        triggerSave =()=>{ 
+          const savetriggers = [...new Set([...document.querySelectorAll('.quiz_box textarea')].concat([...document.querySelectorAll('.quiz_box input')]))]
+          
+          console.log(savetriggers)
+          
+          savetriggers.forEach(trigger=>{
+            trigger.oninput =()=>{
+              saveQuiz()
+            }
+          })
+        }
+
+
         add_question.onclick = () => {
           var counter = document.querySelectorAll('.question_slide').length + 1
           if (question_mode.value === 'mcq') {
@@ -68,6 +83,7 @@
           }
           createPagination(counter)
           makeQuizSwiper()
+          triggerSave()
         }
 
 
@@ -291,19 +307,13 @@
           handleFill_in()
           delFill_ins()
           makeQuizSwiper()
+          triggerSave()
         }
         restoreQuizState()
 
 
 
-        //union of inputs and texareas to trigger autosave oninput
-        const savetriggers = [...new Set([...document.querySelectorAll('.quiz_box textarea')].concat([...document.querySelectorAll('.quiz_box input')]))]
-
-        savetriggers.forEach(trigger=>{
-          trigger.oninput =()=>{
-            saveQuiz()
-          }
-        })
+        
         
       </script>
     </section>
@@ -312,7 +322,7 @@
 
 </html>
 
-<script src="js/scheme.js"></script>
+<script src="scheme.js"></script>
 
 <style>
   .fill_in span,
